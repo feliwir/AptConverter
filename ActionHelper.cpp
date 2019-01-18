@@ -131,7 +131,7 @@ void ActionHelper::AddURLAction(action_type action, ActionBytes *ab, const char 
 		ab->actionbytes << c;
 		ab->actionbytecount++;
 	}
-	
+
 	ActionString *s = new ActionString;
 	s->stringoffset = ab->actionbytecount;
 	s->string = _strdup(str1);
@@ -202,7 +202,7 @@ void ActionHelper::AddDefineFunction2Action(action_type action, ActionBytes *ab,
 	ab->actionbytecount++;
 	unsigned int x = GETALIGN(ab->actionbytecount);
 	c = 0;
-	for (unsigned int i = 0;i < x;i++)
+	for (unsigned int i = 0; i < x; i++)
 	{
 		ab->actionbytes << c;
 		ab->actionbytecount++;
@@ -221,10 +221,10 @@ void ActionHelper::AddDefineFunction2Action(action_type action, ActionBytes *ab,
 	ab->actionbytecount++;
 	ab->actionbytes << c;
 	ab->actionbytecount++;
-	c = GetByte(pd->argumentcount,0);
+	c = GetByte(pd->argumentcount, 0);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
-	c = GetByte(pd->argumentcount,1);
+	c = GetByte(pd->argumentcount, 1);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
 	c = GetByte(pd->argumentcount, 2);
@@ -233,16 +233,16 @@ void ActionHelper::AddDefineFunction2Action(action_type action, ActionBytes *ab,
 	c = GetByte(pd->argumentcount, 3);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
-	c = GetByte(flags,0);
+	c = GetByte(flags, 0);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
-	c = GetByte(flags,1);
+	c = GetByte(flags, 1);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
-	c = GetByte(flags,2);
+	c = GetByte(flags, 2);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
-	c = GetByte(flags,3);
+	c = GetByte(flags, 3);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
 	pd->definefunction2offset = ab->actionbytecount;
@@ -255,19 +255,19 @@ void ActionHelper::AddDefineFunction2Action(action_type action, ActionBytes *ab,
 	ab->actionbytecount++;
 	ab->actionbytes << c;
 	ab->actionbytecount++;
-	c = GetByte(size,0);
+	c = GetByte(size, 0);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
-	c = GetByte(size,1);
+	c = GetByte(size, 1);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
-	c = GetByte(size,2);
+	c = GetByte(size, 2);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
-	c = GetByte(size,3);
+	c = GetByte(size, 3);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
-	c = GetByte(0x98765432,0);
+	c = GetByte(0x98765432, 0);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
 	c = GetByte(0x98765432, 1);
@@ -279,7 +279,7 @@ void ActionHelper::AddDefineFunction2Action(action_type action, ActionBytes *ab,
 	c = GetByte(0x98765432, 3);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
-	c = GetByte(0x12345678,0);
+	c = GetByte(0x12345678, 0);
 	ab->actionbytes << c;
 	ab->actionbytecount++;
 	c = GetByte(0x12345678, 1);
@@ -415,13 +415,13 @@ void ActionHelper::AddPushDataAction(action_type action, ActionBytes *ab, Action
 	ab->actionbytecount++;
 }
 
-void ActionHelper::APT_ProcessActions(tinyxml2::XMLDocument& doc,tinyxml2::XMLElement* parent, uint8_t *actions, uint8_t *aptaptdata,  AptConstData* data, uint8_t* aptbuffer)
+void ActionHelper::APT_ProcessActions(tinyxml2::XMLDocument& doc, tinyxml2::XMLElement* parent, uint8_t *actions, uint8_t *aptaptdata, AptConstData* data, uint8_t* aptbuffer)
 {
 	uint8_t *a = actions;
 	bool is_func = false;
-    uint16_t df_size = 0;
-    uint32_t df_ptr = 0;
-    tinyxml2::XMLElement* df_node = nullptr;
+	uint16_t df_size = 0;
+	uint32_t df_ptr = 0;
+	tinyxml2::XMLElement* df_node = nullptr;
 
 	ActionHelper::action_type action;
 	do
@@ -433,66 +433,66 @@ void ActionHelper::APT_ProcessActions(tinyxml2::XMLDocument& doc,tinyxml2::XMLEl
 		case ActionHelper::ACTION_BRANCHALWAYS:
 		{
 			ALIGN(a);
-            auto node = doc.NewElement("branchalways");
-            node->SetAttribute("offset", *(int32_t *)a);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("branchalways");
+			node->SetAttribute("offset", *(int32_t *)a);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 			a += 4;
 		}
-			break;
+		break;
 		case ACTION_BRANCHIFTRUE:
 		{
 			ALIGN(a);
-            auto node = doc.NewElement("branchiftrue");
-            node->SetAttribute("offset", *(int32_t *)a);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("branchiftrue");
+			node->SetAttribute("offset", *(int32_t *)a);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 			a += 4;
 		}
-			break;
+		break;
 		case EA_BRANCHIFFALSE:
 		{
 			ALIGN(a);
-            auto node = doc.NewElement("branchiffalse");
-            node->SetAttribute("offset", *(int32_t *)a);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("branchiffalse");
+			node->SetAttribute("offset", *(int32_t *)a);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 			a += 4;
 		}
-			break;
+		break;
 		case ACTION_GOTOFRAME:
 		{
 			ALIGN(a);
-            auto node = doc.NewElement("gotoframe");
-            node->SetAttribute("frame", *(int32_t *)a);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("gotoframe");
+			node->SetAttribute("frame", *(int32_t *)a);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 			a += 4;
 		}
-			break;
+		break;
 		case ACTION_SETREGISTER:
 		{
 			ALIGN(a);
-            auto node = doc.NewElement("setregister");
-            node->SetAttribute("reg", *(int32_t *)a);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("setregister");
+			node->SetAttribute("reg", *(int32_t *)a);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 			a += 4;
 		}
-			break;
+		break;
 		case ACTION_WITH:
 		{
 			ALIGN(a);
-            auto node = doc.NewElement("with");
-            node->SetAttribute("pos", *(int32_t *)a);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("with");
+			node->SetAttribute("pos", *(int32_t *)a);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 			a += 4;
 		}
-			break;
+		break;
 		case ACTION_GOTOEXPRESSION:
 		{
 			ALIGN(a);
-            auto node = doc.NewElement("gotoexpression");
-            node->SetAttribute("pos", *(int32_t *) a);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("gotoexpression");
+			node->SetAttribute("pos", *(int32_t *)a);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 			a += 4;
 		}
-			break;
+		break;
 		case ACTION_GETURL:
 		{
 			ALIGN(a);
@@ -502,12 +502,12 @@ void ActionHelper::APT_ProcessActions(tinyxml2::XMLDocument& doc,tinyxml2::XMLEl
 			add(*(uint32_t *)a);
 			char *str2 = (char *)(*(uint32_t *)a);
 			a += 4;
-            auto node = doc.NewElement("geturl");
-            node->SetAttribute("str1", str1);
-            node->SetAttribute("str2", str2);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("geturl");
+			node->SetAttribute("str1", str1);
+			node->SetAttribute("str2", str2);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_CONSTANTPOOL:
 		{
 			ALIGN(a);
@@ -516,22 +516,22 @@ void ActionHelper::APT_ProcessActions(tinyxml2::XMLDocument& doc,tinyxml2::XMLEl
 			add(*(uint32_t *)a);
 			uint32_t *cpd = *(uint32_t **)a;
 			a += 4;
-            auto node = doc.NewElement("constantpool");
+			auto node = doc.NewElement("constantpool");
 
 			for (uint32_t i = 0; i < count; i++)
 			{
-                auto node2 = doc.NewElement("constant");
-                node2->SetAttribute("id", i);
+				auto node2 = doc.NewElement("constant");
+				node2->SetAttribute("id", i);
 				if (data->items[cpd[i]]->type == TYPE_NUMBER)
-					node2->SetAttribute("integer",data->items[cpd[i]]->numvalue);
+					node2->SetAttribute("integer", data->items[cpd[i]]->numvalue);
 				else if (data->items[cpd[i]]->type == TYPE_STRING)
-                    node2->SetAttribute("string", data->items[cpd[i]]->strvalue);
+					node2->SetAttribute("string", data->items[cpd[i]]->strvalue);
 
-                node->InsertEndChild(node2);
+				node->InsertEndChild(node2);
 			}
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_PUSHDATA:
 		{
 			ALIGN(a);
@@ -540,23 +540,23 @@ void ActionHelper::APT_ProcessActions(tinyxml2::XMLDocument& doc,tinyxml2::XMLEl
 			add(*(uint32_t *)a);
 			uint32_t *pid = *(uint32_t **)a;
 			a += 4;
-            auto node = doc.NewElement("pushdata");
+			auto node = doc.NewElement("pushdata");
 
 			for (uint32_t i = 0; i < count; i++)
 			{
-                auto node2 = doc.NewElement("data");
-                node2->SetAttribute("id", pid[i]);
+				auto node2 = doc.NewElement("data");
+				node2->SetAttribute("id", pid[i]);
 
 				if (data->items[pid[i]]->type == TYPE_NUMBER)
-                    node2->SetAttribute("integer", data->items[pid[i]]->numvalue);
+					node2->SetAttribute("integer", data->items[pid[i]]->numvalue);
 				else if (data->items[pid[i]]->type == TYPE_STRING)
-                    node2->SetAttribute("string", data->items[pid[i]]->strvalue);
+					node2->SetAttribute("string", data->items[pid[i]]->strvalue);
 
-                node->InsertEndChild(node2);
+				node->InsertEndChild(node2);
 			}
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_DEFINEFUNCTION2:
 		{
 			ALIGN(a);
@@ -571,36 +571,36 @@ void ActionHelper::APT_ProcessActions(tinyxml2::XMLDocument& doc,tinyxml2::XMLEl
 			FunctionArgument *args = (FunctionArgument *)(*(uint32_t *)a);
 			a += 4;
 			uint32_t size = *(uint32_t *)a;
-            auto node = doc.NewElement("definefunction2");
-            node->SetAttribute("name", name);
-            node->SetAttribute("flags", flags);
-            node->SetAttribute("size", size);
+			auto node = doc.NewElement("definefunction2");
+			node->SetAttribute("name", name);
+			node->SetAttribute("flags", flags);
+			node->SetAttribute("size", size);
 
 			for (uint32_t i = 0; i < count; i++)
 			{
 				add(args[i].name);
-                auto node2 = doc.NewElement("argument");
-                node2->SetAttribute("reg", args[i].reg);
-                node2->SetAttribute("name", args[i].name);
-                node->InsertEndChild(node2);
+				auto node2 = doc.NewElement("argument");
+				node2->SetAttribute("reg", args[i].reg);
+				node2->SetAttribute("name", args[i].name);
+				node->InsertEndChild(node2);
 			}
-            if (size > 0)
-            {
-                auto node2 = doc.NewElement("body");
-                node->InsertEndChild(node2);
-                df_node = node2;
-                df_size = size;
-                is_func = true;
-            }
-            parent->InsertEndChild(node);
+			if (size > 0)
+			{
+				auto node2 = doc.NewElement("body");
+				node->InsertEndChild(node2);
+				df_node = node2;
+				df_size = size;
+				is_func = true;
+			}
+			parent->InsertEndChild(node);
 
 			a += 4;
 			a += 4;
 			a += 4;
-            df_ptr = (uint32_t)a;
-            
+			df_ptr = (uint32_t)a;
+
 		}
-			break;
+		break;
 		case ACTION_DEFINEFUNCTION:
 		{
 			ALIGN(a);
@@ -613,432 +613,504 @@ void ActionHelper::APT_ProcessActions(tinyxml2::XMLDocument& doc,tinyxml2::XMLEl
 			char **args = (char **)(*(uint32_t *)a);
 			a += 4;
 			uint32_t size = *(uint32_t *)a;
-            auto node = doc.NewElement("definefunction");
-            node->SetAttribute("name", name);
-            node->SetAttribute("size", size);
-            
+			auto node = doc.NewElement("definefunction");
+			node->SetAttribute("name", name);
+			node->SetAttribute("size", size);
+
 			for (uint32_t i = 0; i < count; i++)
 			{
 				add(args[i]);
-                auto node2 = doc.NewElement("argument");
-                node2->SetAttribute("name", args[i]);
-                node->InsertEndChild(node2);
+				auto node2 = doc.NewElement("argument");
+				node2->SetAttribute("name", args[i]);
+				node->InsertEndChild(node2);
 			}
 			a += 4;
 			a += 4;
 			a += 4;
 
-            if (size > 0)
-            {
-                auto node2 = doc.NewElement("body");
-                node->InsertEndChild(node2);
-                df_node = node2;
-                df_size = size;
-                is_func = true;
-            }
-            parent->InsertEndChild(node);
-            df_ptr = (uint32_t)a;
+			if (size > 0)
+			{
+				auto node2 = doc.NewElement("body");
+				node->InsertEndChild(node2);
+				df_node = node2;
+				df_size = size;
+				is_func = true;
+			}
+			parent->InsertEndChild(node);
+			df_ptr = (uint32_t)a;
 		}
-			break;
+		break;
 		case EA_PUSHSTRING:
 		{
 			ALIGN(a);
 			add(*(uint32_t *)a);
 			char *str = (char *)(*(uint32_t *)a);
 			a += 4;
-            auto node = doc.NewElement("pushstring");
-            node->SetAttribute("str", str);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushstring");
+			node->SetAttribute("str", str);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 		}
-			break;
+		break;
 		case EA_GETSTRINGVAR:
 		{
 			ALIGN(a);
 			add(*(uint32_t *)a);
 			char *str = (char *)(*(uint32_t *)a);
 			a += 4;
-            auto node = doc.NewElement("getstringvar");
-            node->SetAttribute("str", str);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("getstringvar");
+			node->SetAttribute("str", str);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case EA_GETSTRINGMEMBER:
 		{
 			ALIGN(a);
 			add(*(uint32_t *)a);
 			char *str = (char *)(*(uint32_t *)a);
 			a += 4;
-            auto node = doc.NewElement("getstringmember");
-            node->SetAttribute("str", str);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("getstringmember");
+			node->SetAttribute("str", str);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case EA_SETSTRINGVAR:
 		{
 			ALIGN(a);
 			add(*(uint32_t *)a);
 			char *str = (char *)(*(uint32_t *)a);
 			a += 4;
-            auto node = doc.NewElement("setstringvar");
-            node->SetAttribute("str", str);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);   
+			auto node = doc.NewElement("setstringvar");
+			node->SetAttribute("str", str);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case EA_SETSTRINGMEMBER:
 		{
 			ALIGN(a);
 			add(*(uint32_t *)a);
 			char *str = (char *)(*(uint32_t *)a);
 			a += 4;
-            auto node = doc.NewElement("setstringmember");
-            node->SetAttribute("str", str);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("setstringmember");
+			node->SetAttribute("str", str);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_SETTARGET:
 		{
 			ALIGN(a);
 			add(*(uint32_t *)a);
 			char *str = (char *)(*(uint32_t *)a);
 			a += 4;
-            auto node = doc.NewElement("settarget");
-            node->SetAttribute("str", str);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("settarget");
+			node->SetAttribute("str", str);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_GOTOLABEL:
 		{
 			ALIGN(a);
 			add(*(uint32_t *)a);
 			char *str = (char *)(*(uint32_t *)a);
 			a += 4;
-            auto node = doc.NewElement("gotolabel");
-            node->SetAttribute("label", str);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("gotolabel");
+			node->SetAttribute("label", str);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case EA_CALLNAMEDFUNCTIONPOP:
 		{
 			uint8_t val = *(uint8_t *)a;
-            auto node = doc.NewElement("callnamedfuncpop");
-            node->SetAttribute("val", val);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("callnamedfuncpop");
+			node->SetAttribute("val", val);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 			a += 1;
 		}
-			break;
+		break;
 		case EA_CALLNAMEDFUNCTION:
 		{
 			uint8_t val = *(uint8_t *)a;
-            auto node = doc.NewElement("callnamedfunc");
-            node->SetAttribute("val", val);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("callnamedfunc");
+			node->SetAttribute("val", val);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 			a += 1;
 		}
-			break;
+		break;
 		case EA_CALLNAMEDMETHODPOP:
 		{
 			uint8_t val = *(uint8_t *)a;
-            auto node = doc.NewElement("callnamedmethodpop");
-            node->SetAttribute("val", val);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("callnamedmethodpop");
+			node->SetAttribute("val", val);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 			a += 1;
 		}
-			break;
+		break;
 		case EA_CALLNAMEDMETHOD:
 		{
 			uint8_t val = *(uint8_t *)a;
-            auto node = doc.NewElement("callnamedmethod");
-            node->SetAttribute("val", val);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("callnamedmethod");
+			node->SetAttribute("val", val);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 			a += 1;
 		}
-			break;
+		break;
 		case EA_PUSHCONSTANT:
 		{
 			uint8_t val = *(uint8_t *)a;
-            auto node = doc.NewElement("pushconstant");
-            node->SetAttribute("val", val);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushconstant");
+			node->SetAttribute("val", val);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 			a += 1;
 		}
-			break;
+		break;
 		case EA_PUSHVALUEOFVAR:
 		{
 			uint8_t val = *(uint8_t *)a;
-            auto node = doc.NewElement("pushvalue");
-            node->SetAttribute("val", val);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushvalue");
+			node->SetAttribute("val", val);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 			a += 1;
 		}
-			break;
+		break;
 		case EA_GETNAMEDMEMBER:
 		{
 			uint8_t val = *(uint8_t *)a;
-            auto node = doc.NewElement("getnamedmember");
-            node->SetAttribute("val", val);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("getnamedmember");
+			node->SetAttribute("val", val);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 			a += 1;
 		}
-			break;
+		break;
 		case EA_PUSHBYTE:
 		{
 			uint8_t val = *(uint8_t *)a;
-            auto node = doc.NewElement("pushbyte");
-            node->SetAttribute("val", val);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushbyte");
+			node->SetAttribute("val", val);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 			a += 1;
 		}
-			break;
+		break;
 		case EA_PUSHREGISTER:
 		{
-            uint8_t val = *(uint8_t *)a;
-            auto node = doc.NewElement("pushregister");
-            node->SetAttribute("val", action);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			uint8_t val = *(uint8_t *)a;
+			auto node = doc.NewElement("pushregister");
+			node->SetAttribute("val", action);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 			a += 1;
 		}
-			break;
+		break;
 		case EA_PUSHWORDCONSTANT:
 		{
 			uint16_t val = *(uint16_t *)a;
-            auto node = doc.NewElement("pushwordconstant");
-            node->SetAttribute("val", val);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushwordconstant");
+			node->SetAttribute("val", val);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 			a += 2;
 		}
 		case EA_PUSHSHORT:
 		{
-            uint16_t val = *(uint16_t *)a;
-            auto node = doc.NewElement("pushshort");
-            node->SetAttribute("val", val);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			uint16_t val = *(uint16_t *)a;
+			auto node = doc.NewElement("pushshort");
+			node->SetAttribute("val", val);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 			a += 2;
 		}
-			break;
+		break;
 		case EA_PUSHFLOAT:
 		{
-            float val = *(float *)a;
-            auto node = doc.NewElement("pushfloat");
-            node->SetAttribute("val", val);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			float val = *(float *)a;
+			auto node = doc.NewElement("pushfloat");
+			node->SetAttribute("val", val);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 
 			a += 4;
 		}
-			break;
+		break;
 		case EA_PUSHLONG:
 		{
-            uint32_t val = *(uint32_t*)a;
-            auto node = doc.NewElement("pushvalue");
-            node->SetAttribute("val", val);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			uint32_t val = *(uint32_t*)a;
+			auto node = doc.NewElement("pushvalue");
+			node->SetAttribute("val", val);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 			a += 4;
 		}
-			break;
+		break;
 		case ACTION_END:
 		{
-            auto node = doc.NewElement("end");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("end");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_LOGICALAND:
 		{
-            auto node = doc.NewElement("logicaland");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("logicaland");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_LOGICALOR:
 		{
-            auto node = doc.NewElement("logicalor");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("logicalor");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_LOGICALNOT:
 		{
-            auto node = doc.NewElement("logicalnot");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("logicalnot");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case EA_PUSHONE:
 		{
-            auto node = doc.NewElement("pushone");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushone");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_TRACE:
 		{
-            auto node = doc.NewElement("trace");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("trace");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_NEW:
 		{
-            auto node = doc.NewElement("new");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("new");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_SETMEMBER:
 		{
-            auto node = doc.NewElement("setmember");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("setmember");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case EA_PUSHZERO:
 		{
-            auto node = doc.NewElement("pushzero");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushzero");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_POP:
 		{
-            auto node = doc.NewElement("pop");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pop");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_GETMEMBER:
 		{
-            auto node = doc.NewElement("getmember");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("getmember");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_DUP:
 		{
-            auto node = doc.NewElement("dup");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("dup");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_NEWADD:
 		{
-            auto node = doc.NewElement("newadd");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("newadd");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_NEWLESSTHAN:
 		{
-            auto node = doc.NewElement("newlessthan");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("newlessthan");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_NEWEQUALS:
 		{
-            auto node = doc.NewElement("newequals");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("newequals");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case EA_PUSHTRUE:
 		{
-            auto node = doc.NewElement("pushtrue");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushtrue");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case EA_PUSHFALSE:
 		{
-            auto node = doc.NewElement("pushfalse");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushfalse");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case EA_PUSHNULL:
 		{
-            auto node = doc.NewElement("pushnull");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushnull");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case EA_PUSHUNDEFINED:
 		{
-            auto node = doc.NewElement("pushundefined");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushundefined");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_INCREMENT:
 		{
-            auto node = doc.NewElement("increment");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("increment");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_DECREMENT:
 		{
-            auto node = doc.NewElement("decrement");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("decrement");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_DEFINELOCAL:
 		{
-            auto node = doc.NewElement("definelocal");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("definelocal");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_GREATER:
 		{
-            auto node = doc.NewElement("greater");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("greater");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case EA_PUSHTHIS:
 		{
-            auto node = doc.NewElement("pushthis");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushthis");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case EA_PUSHGLOBAL:
 		{
-            auto node = doc.NewElement("pushglobal");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("pushglobal");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_GETVARIABLE:
 		{
-            auto node = doc.NewElement("getvariable");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("getvariable");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_SETVARIABLE:
 		{
-            auto node = doc.NewElement("setvariable");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("setvariable");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		case ACTION_WAITFORFRAME:
 		{
-            auto node = doc.NewElement("waitforframe");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("waitforframe");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
-        case ACTION_GETURL2:
-        {
-            auto node = doc.NewElement("geturl2");
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
-        }
-            break;
+		break;
+		case ACTION_GETURL2:
+		{
+			auto node = doc.NewElement("geturl2");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
+		case ACTION_NEXTFRAME:
+		{
+			auto node = doc.NewElement("nextframe");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
+		case ACTION_PREVFRAME:
+		{
+			auto node = doc.NewElement("prevframe");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
+		case ACTION_PLAY:
+		{
+			auto node = doc.NewElement("play");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
+		case ACTION_STOP:
+		{
+			auto node = doc.NewElement("stop");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
+		case ACTION_STRINGCONCAT:
+		{
+			auto node = doc.NewElement("stringadd");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
+		case ACTION_CALLFUNCTION:
+		{
+			auto node = doc.NewElement("callfunction");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
+		case ACTION_RETURN:
+		{
+			auto node = doc.NewElement("return");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
+		case EA_CALLMETHODPOP:
+		{
+			auto node = doc.NewElement("callmethodpop");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
+		case ACTION_GETPROPERTY:
+		{
+			auto node = doc.NewElement("getproperty");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
+		case ACTION_TONUMBER:
+		{
+			auto node = doc.NewElement("tonumber");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
+		case EA_ZEROVARIABLE:
+		{
+			auto node = doc.NewElement("zerovariable");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
+		case ACTION_SUBTRACT:
+		{
+			auto node = doc.NewElement("subtract");
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+		}
+		break;
 		default:
 		{
-            auto node = doc.NewElement("noarg");
-            node->SetAttribute("action", action);
-            (is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
+			auto node = doc.NewElement("noarg");
+			node->SetAttribute("action", action);
+			(is_func) ? df_node->InsertEndChild(node) : parent->InsertEndChild(node);
 		}
-			break;
+		break;
 		}
 
-        if (df_ptr + df_size == (uint32_t)a && is_func)
-        {
-            is_func = false;
-        }
+		if (df_ptr + df_size == (uint32_t)a && is_func)
+		{
+			is_func = false;
+		}
 	} while (action != ACTION_END);
 }
 
 void ActionHelper::XML_ProcessActions(tinyxml2::XMLElement* entry, ActionBytes *ab, AptConstData* data)
 {
-    tinyxml2::XMLElement* entryt;
+	tinyxml2::XMLElement* entryt;
 
 	for (entryt = entry->FirstChildElement(); entryt != 0; entryt = entryt->NextSiblingElement())
 	{
@@ -1148,22 +1220,22 @@ void ActionHelper::XML_ProcessActions(tinyxml2::XMLElement* entry, ActionBytes *
 			unsigned int size = entryt->IntAttribute("size");
 			const char *name = entryt->Attribute("name");
 
-            for (entryt2 = entryt->FirstChildElement("argument"); entryt2 != 0; entryt2 = entryt2->NextSiblingElement("argument"))
-            {
-                pd->argumentcount++;
-                FunctionArgument *a = new FunctionArgument;
-                a->reg = entryt2->IntAttribute("reg");
-                a->name = entryt2->Attribute("name");
-                pd->arguments.push_back(a);
-            }
+			for (entryt2 = entryt->FirstChildElement("argument"); entryt2 != 0; entryt2 = entryt2->NextSiblingElement("argument"))
+			{
+				pd->argumentcount++;
+				FunctionArgument *a = new FunctionArgument;
+				a->reg = entryt2->IntAttribute("reg");
+				a->name = entryt2->Attribute("name");
+				pd->arguments.push_back(a);
+			}
 
-            AddDefineFunction2Action(ACTION_DEFINEFUNCTION2, ab, pd, flags, size, name);
+			AddDefineFunction2Action(ACTION_DEFINEFUNCTION2, ab, pd, flags, size, name);
 
-            if (entryt2 = entryt->FirstChildElement("body"))
-            {
-                XML_ProcessActions(entryt2, ab, data);
-            }          			        
-         
+			if (entryt2 = entryt->FirstChildElement("body"))
+			{
+				XML_ProcessActions(entryt2, ab, data);
+			}
+
 		}
 		else if (actionname == "definefunction")
 		{
@@ -1176,19 +1248,19 @@ void ActionHelper::XML_ProcessActions(tinyxml2::XMLElement* entry, ActionBytes *
 			unsigned int size = entryt->IntAttribute("size");
 			const char *name = _strdup(entryt->Attribute("name"));
 
-            for (entryt2 = entryt->FirstChildElement("argument"); entryt2 != 0; entryt2 = entryt2->NextSiblingElement("argument"))
-            {
-                adf->argumentcount++;
-                adf->arguments.push_back(entryt2->Attribute("name"));
-            }
+			for (entryt2 = entryt->FirstChildElement("argument"); entryt2 != 0; entryt2 = entryt2->NextSiblingElement("argument"))
+			{
+				adf->argumentcount++;
+				adf->arguments.push_back(entryt2->Attribute("name"));
+			}
 
-            AddDefineFunctionAction(ACTION_DEFINEFUNCTION, ab, adf, size, name);
+			AddDefineFunctionAction(ACTION_DEFINEFUNCTION, ab, adf, size, name);
 
-            if (entryt2 = entryt->FirstChildElement("body"))
-            {
-                XML_ProcessActions(entryt2, ab, data);
-            }
-		
+			if (entryt2 = entryt->FirstChildElement("body"))
+			{
+				XML_ProcessActions(entryt2, ab, data);
+			}
+
 		}
 		else if (actionname == "pushstring")
 		{
@@ -1308,7 +1380,7 @@ void ActionHelper::XML_ProcessActions(tinyxml2::XMLElement* entry, ActionBytes *
 		}
 		else if (actionname == "trace")
 		{
-			AddAction(ACTION_TRACE,ab);
+			AddAction(ACTION_TRACE, ab);
 		}
 		else if (actionname == "new")
 		{
@@ -1394,19 +1466,67 @@ void ActionHelper::XML_ProcessActions(tinyxml2::XMLElement* entry, ActionBytes *
 		{
 			AddAction(ACTION_SETVARIABLE, ab);
 		}
-        else if (actionname == "geturl2")
-        {
-            AddAction(ACTION_GETURL2, ab);
-        }
-        else if (actionname == "end")
-        {
-            AddAction(ACTION_END, ab);
-        }
+		else if (actionname == "geturl2")
+		{
+			AddAction(ACTION_GETURL2, ab);
+		}
+		else if (actionname == "end")
+		{
+			AddAction(ACTION_END, ab);
+		}
+		else if (actionname == "nextframe")
+		{
+			AddAction(ACTION_NEXTFRAME, ab);
+		}
+		else if (actionname == "prevframe")
+		{
+			AddAction(ACTION_PREVFRAME, ab);
+		}
+		else if (actionname == "play")
+		{
+			AddAction(ACTION_PLAY, ab);
+		}
+		else if (actionname == "stop")
+		{
+			AddAction(ACTION_STOP, ab);
+		}
+		else if (actionname == "stringadd")
+		{
+			AddAction(ACTION_STRINGCONCAT, ab);
+		}
+		else if (actionname == "callfunction")
+		{
+			AddAction(ACTION_CALLFUNCTION, ab);
+		}
+		else if (actionname == "return")
+		{
+			AddAction(ACTION_RETURN, ab);
+		}
+		else if (actionname == "callmethodpop")
+		{
+			AddAction(EA_CALLMETHODPOP, ab);
+		}
+		else if (actionname == "getproperty")
+		{
+			AddAction(ACTION_GETPROPERTY, ab);
+		}
+		else if (actionname == "tonumber")
+		{
+			AddAction(ACTION_TONUMBER, ab);
+		}
+		else if (actionname == "zerovariable")
+		{
+			AddAction(EA_ZEROVARIABLE, ab);
+		}
+		else if (actionname == "subtract")
+		{
+			AddAction(ACTION_SUBTRACT, ab);
+		}
 		else if (actionname == "noarg")
 		{
 			unsigned int action = entryt->IntAttribute("action");
 			AddAction((action_type)action, ab);
-		}	
+		}
 		else
 		{
 			std::cout << "Unknown action: " << actionname << std::endl;

@@ -5,7 +5,7 @@
 
 bool AptFile::Convert(std::string filename)
 {
-	std::tr2::sys::path file(filename);
+	std::experimental::filesystem::path file(filename);
 	if (file.extension() == ".xml")
 		return XMLToApt(filename);
 	else if (file.extension() == ".apt")
@@ -22,9 +22,9 @@ bool AptFile::Convert(std::string filename)
 
 bool AptFile::AptToXML(std::string filename)
 {
-	std::tr2::sys::path aptfile(filename);
-	std::tr2::sys::path constfile(aptfile.basename() + ".const");
-	std::tr2::sys::path xmlfile(aptfile.basename() + ".xml");
+	std::experimental::filesystem::path aptfile(filename);
+	std::experimental::filesystem::path constfile(aptfile.stem().string() + ".const");
+	std::experimental::filesystem::path xmlfile(aptfile.stem().string() + ".xml");
 
 	if (!fileExists(aptfile))
 	{
@@ -655,9 +655,9 @@ bool AptFile::AptToXML(std::string filename)
 
 bool AptFile::XMLToApt(std::string filename)
 {
-	std::tr2::sys::path xmlfile(filename);
-	std::tr2::sys::path constfile(xmlfile.basename() + ".const");
-	std::tr2::sys::path aptfile(xmlfile.basename() + ".apt");
+	std::experimental::filesystem::path xmlfile(filename);
+	std::experimental::filesystem::path constfile(xmlfile.stem().string() + ".const");
+	std::experimental::filesystem::path aptfile(xmlfile.stem().string() + ".apt");
 
 	if (xmlfile.extension() != ".xml")
 	{

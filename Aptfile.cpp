@@ -5,7 +5,7 @@
 
 bool AptFile::Convert(std::string filename)
 {
-	std::tr2::sys::path file(filename);
+	std::filesystem::path file(filename);
 	if (file.extension() == ".xml")
 		return XMLToApt(filename);
 	else if (file.extension() == ".apt")
@@ -22,32 +22,32 @@ bool AptFile::Convert(std::string filename)
 
 bool AptFile::AptToXML(std::string filename)
 {
-	std::tr2::sys::path aptfile(filename);
-	std::tr2::sys::path constfile(aptfile.basename() + ".const");
-	std::tr2::sys::path xmlfile(aptfile.basename() + ".xml");
+	std::filesystem::path aptfile(filename);
+	std::filesystem::path constfile(aptfile.stem().string() + ".const");
+	std::filesystem::path xmlfile(aptfile.stem().string() + ".xml");
 
-	if (!fileExists(aptfile))
+	if (!std::filesystem::exists(aptfile))
 	{
 		std::cout << "Sorry but " << aptfile.filename() << " is missing" << std::endl;
 		return false;
 	}
 
-	if (!fileExists(constfile))
+	if (!std::filesystem::exists(constfile))
 	{
 		std::cout << "Sorry but " << constfile.filename() << " is missing" << std::endl;
 		return false;
 	}
 
 	//read the const file into a buffer
+	uint32_t constsize = std::filesystem::file_size(constfile);
 	std::ifstream conststream(constfile, std::ios::binary | std::ios::in);
-	uint32_t constsize = size(conststream);
 	uint8_t* constbuffer = new uint8_t[constsize];
 	conststream.read((char*)constbuffer, constsize);
 	conststream.close();
 
 	//read the apt file into a buffer
+	uint32_t aptsize = std::filesystem::file_size(aptfile);
 	std::ifstream aptstream(aptfile, std::ios::binary | std::ios::in);
-	uint32_t aptsize = size(aptstream);
 	uint8_t* aptbuffer = new uint8_t[aptsize];
 	aptstream.read((char*)aptbuffer, aptsize);
 	aptstream.close();
@@ -655,9 +655,9 @@ bool AptFile::AptToXML(std::string filename)
 
 bool AptFile::XMLToApt(std::string filename)
 {
-	std::tr2::sys::path xmlfile(filename);
-	std::tr2::sys::path constfile(xmlfile.basename() + ".const");
-	std::tr2::sys::path aptfile(xmlfile.basename() + ".apt");
+	std::filesystem::path xmlfile(filename);
+	std::filesystem::path constfile(xmlfile.stem().string() + ".const");
+	std::filesystem::path aptfile(xmlfile.stem().string() + ".apt");
 
 	if (xmlfile.extension() != ".xml")
 	{
@@ -665,7 +665,7 @@ bool AptFile::XMLToApt(std::string filename)
 		return false;
 	}
 
-	if (!fileExists(xmlfile))
+	if (!std::filesystem::exists(xmlfile))
 	{
 		std::cout << "Sorry but " << xmlfile.filename() << " is missing" << std::endl;
 		return false;
@@ -895,6 +895,7 @@ bool AptFile::XMLToApt(std::string filename)
 			sh->fontheight = entry->FloatAttribute("height");
 			sh->readonly = entry->IntAttribute("readonly");
 			sh->multiline = entry->IntAttribute("multiline");
+			sh->wordwrap = entry->IntAttribute("wordwrap");
 
 			entry2 = entry->FirstChildElement("ettext");
 			if (entry2)

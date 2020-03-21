@@ -12,22 +12,6 @@
 #define B(x) x?"true":"false"
 #define add(x) *((uint8_t **)&x) += (uint32_t)aptbuffer; 
 
-
-inline bool fileExists(std::tr2::sys::path file)
-{
-	std::fstream test(file);
-	return !test.fail();
-}
-
-inline uint32_t size(std::ifstream& stream)
-{
-	uint32_t size = 0;
-	stream.seekg(0, std::ios::end);
-	size = (uint32_t)stream.tellg();
-	stream.seekg(0, std::ios::beg);
-	return size;
-}
-
 inline uint32_t HexToDecimal(const char* str)
 {
 	return (uint32_t)strtol(str, NULL, 16);
